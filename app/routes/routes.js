@@ -1,19 +1,19 @@
 module.exports = (app) => {
-    const empPayroll = require('../controllers/controller.js');
+    const employeePayroll = require('../controllers/controller.js');
 
     //Create a new employee
-    app.post('/empPayroll', empPayroll.create);
+    app.post('/employeePayroll', employeePayroll.create);
 
     //Retrieve all employee
-    app.get('/empPayroll', empPayroll.findAll);
+    app.get('/employeePayroll', employeePayroll.findAll);
 
     //Retrieve a single employee with empId
-    app.get('/empPayroll/:empId',empPayroll.findOne);
+    app.get('/employeePayroll/:empId',employeePayroll.findOne);
 
     //Update an employee with empId
-    app.put('/empPayroll/:empId',empPayroll.update);
+    app.put('/employeePayroll/:empId',employeePayroll.update);
 
     //Delete an employee with empId
-    app.delete('/empPayroll/:empId',empPayroll.delete);
+    app.delete('/employeePayroll/:empId',employeePayroll.delete);
 
 }

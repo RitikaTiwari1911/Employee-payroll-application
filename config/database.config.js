@@ -4,7 +4,7 @@ module.exports = () => {
 
     const url = 'mongodb://localhost:27017/employee-payroll-app';
 
-    // gives a native code
+    // connecting database
     mongoose.Promise = global.Promise;
 
     return mongoose.connect(url, {

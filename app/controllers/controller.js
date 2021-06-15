@@ -1,16 +1,19 @@
 const EmployeePayroll = require('../models/model.js');
 
-//Create and save a new employee
+/**
+ * @description Create and save new employee
+ * @param {*} req, request sent from the http
+ * @param {*} res, respond given to the http
+ * @returns res
+ */
 exports.create = (req,res) => {
 
-    //Validate request
     if(!req.body){
         return res.status(400).send({
             message: "Employee cannot be empty"
         });
     }
 
-    //Create a employee
     const employeePayroll = new EmployeePayroll({
         firstName: req.body.firstName || "Untitled Employee",
         lastName: req.body.lastName,
@@ -18,7 +21,6 @@ exports.create = (req,res) => {
         password: req.body.password
     });
 
-    //Save employee in the database
     employeePayroll.save()
         .then(data => {
             res.send(data);
@@ -29,7 +31,11 @@ exports.create = (req,res) => {
         });
 };
 
-//Retrieve and return all employees from the database
+/**
+ * @description Find all the employees present in the database 
+ * @param {*} req, request sent from the http
+ * @param {*} res, respond given to the http
+ */
 exports.findAll = (req,res) => {
     EmployeePayroll.find()
     .then(employeePayroll => {
@@ -41,7 +47,11 @@ exports.findAll = (req,res) => {
     });
 };
 
-//Find a single note with a EmpId
+/**
+ * @description Find a single employeee with the help of empId
+ * @param {*} req, request sent from the http
+ * @param {*} res, respond given to the http
+ */
 exports.findOne = (req,res) => {
     EmployeePayroll.findById(req.params.empId)
     .then(employeePayroll => {
@@ -63,7 +73,12 @@ exports.findOne = (req,res) => {
     });
 };
 
-//Update a note identified by empId in the request
+/**
+ * @description Updating the employee record wwith the help of the empId
+ * @param {*} req, request sent from the http
+ * @param {*} res, respond given to the http
+ * @returns res
+ */
 exports.update = (req, res) =>  {
     //Validate request
     if(!req.body){
@@ -72,7 +87,6 @@ exports.update = (req, res) =>  {
         });
     }
 
-    //Find employee and update it with the request body
     EmployeePayroll.findByIdAndUpdate(req.params.empId,{
         firstName: req.body.firstName || "Untitled Employee",
         lastName: req.body.lastName,
@@ -98,7 +112,11 @@ exports.update = (req, res) =>  {
     });
 };
 
-//Delete an employee with the specified empId in the request
+/**
+ * @description Delete the employee record with the help of empId
+ * @param {*} req, request sent from the http
+ * @param {*} res, respond given to the http
+ */
 exports.delete = (req,res) => {
     EmployeePayroll.findByIdAndRemove(req.params.empId)
     .then(employeePayroll => {

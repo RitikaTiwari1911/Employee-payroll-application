@@ -1,3 +1,10 @@
+/**
+ * @module       Model
+ * @file         models.js
+ * @description  EmpPayrollSchema holds the database Schema 
+ * @author       Ritika <spk2ritika1911@gmail.com>
+ * @since        14/06/2021  
+-----------------------------------------------------------------------------------------------*/
 //connecting to the mongoDB through mongoose
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs')

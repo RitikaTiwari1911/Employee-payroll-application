@@ -17,4 +17,3 @@ module.exports = () => {
         process.exit();
     });
 } 
-

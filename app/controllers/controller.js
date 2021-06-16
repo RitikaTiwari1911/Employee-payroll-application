@@ -20,7 +20,7 @@ class EmpPayrollController{
         const empResponse = {
         }
 
-        EmpService.create(employeePayrollData, (error, data) => {
+        EmpService.createEmp(employeePayrollData, (error, data) => {
             if(error){
                 return res.status(500).send({
                     success: empResponse.success = false,
@@ -35,7 +35,58 @@ class EmpPayrollController{
             })
         });
     }
+
+   
+   
+    /*findAll(req,res) {
+        const empResponse = {}
+        EmpService.findAll((error,data)=>{
+            if(error){
+                return res.status(500).send({
+                    success: empResponse.success = false,
+                    message: empResponse.message = "Some error occured while retrieving employee"
+                })
+            }
+
+            res.send({
+   
+                success: empResponse.success = true,
+                message: empResponse.message = "Retrieved all employees!!",
+                data: empResponse.data = data
+            })
+        });
+    }
+
+
+    update = (req,res) => {
+    
+        const employeePayrollData = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            emailId: req.body.emailId,
+            password: req.body.password
+        }
+
+        const empResponse = {
+        }
+
+        EmpService.updateEmp(employeePayrollData, (error, data) => {
+            if(error){
+                return res.status(500).send({
+                    success: empResponse.success = false,
+                    message: empResponse.message = "Some error occured while creating employee"
+                })
+            }
+
+            res.send({
+                success: empResponse.success = true,
+                message: empResponse.message = "New employee added!!",
+                data: empResponse.data = data
+            })
+        });
+    }*/
 }
+
 
 module.exports = new EmpPayrollController();
 

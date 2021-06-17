@@ -1,4 +1,5 @@
 const EmpService = require('../../services/service.js');
+const { empValidation } = require('../validation/empValidation.js')
 
 /**
  * @description Create and save new employee

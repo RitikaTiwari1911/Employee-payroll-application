@@ -11,10 +11,25 @@ const bcrypt = require('bcryptjs')
 
 //schema for the manner in which the data wwill be stored in the database
 const EmpPayrollSchema = mongoose.Schema({
-    firstName: String,
-    lastName: String,
-    emailId: String,
-    password: String
+    firstName: { 
+        type: String,
+        required: true,
+        validate: /^[a-zA-Z ]{3,30}$/
+    },
+    lastName: {
+        type: String,
+        required: true,
+        validate: /^[a-zA-Z ]{3,30}$/
+    },
+    emailId: {
+        type: String,
+        required: true,
+        validate: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    },
+    password: {
+        type: String,
+        required: true
+    },
 },{
     //Applying time stamp for the data
     timestamps: true

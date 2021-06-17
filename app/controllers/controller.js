@@ -22,18 +22,17 @@ class EmpPayrollController{
         }
 
         EmpService.createEmp(employeePayrollData, (error, data) => {
-            if(error){
-                return res.status(500).send({
-                    success: empResponse.success = false,
-                    message: empResponse.message = "Some error occured while creating employee"
-                })
-            }
-
+            return ((error) ?
+                res.status(500).send({
+                    success: false,
+                    message: "Some error occured while creating employee"
+                }) :
+            
             res.send({
-                success: empResponse.success = true,
-                message: empResponse.message = "New employee added!!",
-                data: empResponse.data = data
-            })
+                success: true,
+                message: "New employee added!!",
+                data: data
+            }));
         });
     }
 

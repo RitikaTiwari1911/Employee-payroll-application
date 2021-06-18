@@ -14,17 +14,15 @@ const EmpPayrollSchema = mongoose.Schema({
     firstName: { 
         type: String,
         required: true,
-        validate: /^[a-zA-Z ]{3,30}$/
     },
     lastName: {
         type: String,
         required: true,
-        validate: /^[a-zA-Z ]{3,30}$/
     },
     emailId: {
         type: String,
         required: true,
-        validate: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        unique: true
     },
     password: {
         type: String,

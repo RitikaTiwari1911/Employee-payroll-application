@@ -9,7 +9,7 @@ const { empValidation } = require('../validation/empValidation.js')
  */
 
 class EmpPayrollController{
-    create = (req,res) => {
+    registerEmp = (req,res) => {
     
         const employeePayrollData = {
             firstName: req.body.firstName,
@@ -23,7 +23,7 @@ class EmpPayrollController{
 
         EmpService.createEmp(employeePayrollData, (error, data) => {
             return ((error) ?
-                res.status(500).send({
+                res.status(400).send({
                     success: false,
                     message: "Some error occured while creating employee"
                 }) :
@@ -31,7 +31,7 @@ class EmpPayrollController{
             res.send({
                 success: true,
                 message: "New employee added!!",
-                data: data
+                data: empResponse.data = data
             }));
         });
     }

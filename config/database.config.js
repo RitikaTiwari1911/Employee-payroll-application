@@ -9,7 +9,8 @@ module.exports = () => {
 
     return mongoose.connect(url, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true
     }).then(() => {
         console.log("Successfully connected to the database");
     }).catch(error => {

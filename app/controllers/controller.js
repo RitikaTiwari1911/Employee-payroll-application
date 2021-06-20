@@ -1,5 +1,13 @@
+/**
+ * @module       EmpPayrollController
+ * @file         controller.js
+ * @description  EmpPayrollController holds the API 
+ * @author       Ritika <spk2ritika1911@gmail.com>
+ * @since        14/06/2021  
+-----------------------------------------------------------------------------------------------*/
+
 const EmpService = require('../../services/service.js');
-const { empValidation } = require('../validation/empValidation.js')
+const { empValidation } = require('../middleware/empValidation.js')
 
 /**
  * @description Create and save new employee
@@ -9,8 +17,13 @@ const { empValidation } = require('../validation/empValidation.js')
  */
 
 class EmpPayrollController{
+    //Validating user input
     registerEmp = (req,res) => {
-    
+        const validateEmp = empValidation.validate(req.body)
+        if(validateEmp.error){
+            res.status(400).send({message:validateEmp.error.details[0].message})
+        }
+
         const employeePayrollData = {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -22,10 +35,13 @@ class EmpPayrollController{
         }
 
         EmpService.createEmp(employeePayrollData, (error, data) => {
+            /**
+             * Checking if the user already exists
+             */
             return ((error) ?
-                res.status(400).send({
+                res.status(500).send({
                     success: false,
-                    message: "Some error occured while creating employee"
+                    message: "Email already exists!"
                 }) :
             
             res.send({
@@ -35,70 +51,10 @@ class EmpPayrollController{
             }));
         });
     }
-
-   
-   
-    /*findAll(req,res) {
-        const empResponse = {}
-        EmpService.findAll((error,data)=>{
-            if(error){
-                return res.status(500).send({
-                    success: empResponse.success = false,
-                    message: empResponse.message = "Some error occured while retrieving employee"
-                })
-            }
-
-            res.send({
-   
-                success: empResponse.success = true,
-                message: empResponse.message = "Retrieved all employees!!",
-                data: empResponse.data = data
-            })
-        });
-    }
-
-
-    update = (req,res) => {
-    
-        const employeePayrollData = {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            emailId: req.body.emailId,
-            password: req.body.password
-        }
-
-        const empResponse = {
-        }
-
-        EmpService.updateEmp(employeePayrollData, (error, data) => {
-            if(error){
-                return res.status(500).send({
-                    success: empResponse.success = false,
-                    message: empResponse.message = "Some error occured while creating employee"
-                })
-            }
-
-            res.send({
-                success: empResponse.success = true,
-                message: empResponse.message = "New employee added!!",
-                data: empResponse.data = data
-            })
-        });
-    }*/
 }
-
 
 module.exports = new EmpPayrollController();
 
 
 
-        /*employeePayroll.save()
-            .then(data => {
-                res.send(data);
-            }).catch(err => {
-                res.status(500).send({
-                    message: err.message || "Some error occured while making the Employee"
-                });
-            });
-};*/
-
+       

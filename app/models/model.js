@@ -33,7 +33,7 @@ const EmpPayrollSchema = mongoose.Schema({
     timestamps: true
 });
 
-
+module.exports = mongoose.model('EmployeePayroll',EmpPayrollSchema);
 //Encrypting password
 EmpPayrollSchema.pre("save",async function(next){
     //This will hash the password if the password is modified by the user in future
@@ -43,4 +43,23 @@ EmpPayrollSchema.pre("save",async function(next){
     next();
 })
 
-module.exports = mongoose.model('EmployeePayroll',EmpPayrollSchema);
+const registerUser = mongoose.model('registerUser',EmpPayrollSchema)
+
+class EmpModel{
+    /**
+     * @description registering employee in the database
+     * @param {*} empData 
+     * @param {*} callback 
+     */
+    create = (empData, callback) =>{
+        const EmpPayrollSchema = new registerUser({
+            firstName: empData.firstName,
+            lastName: empData.lastName,
+            emailId: empData.emailId,
+            password: empData.password
+        });
+        EmpPayrollSchema.save(callback)
+    };
+}
+
+module.exports = new EmpModel();

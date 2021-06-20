@@ -12,5 +12,7 @@ module.exports = (app) => {
     //registering a new employee
     app.post('/registerEmp', employeePayroll.registerEmp);
 
+    //employee login
+    app.post('/empLogin', employeePayroll.empLogin);
     
 }

@@ -60,6 +60,22 @@ class EmpModel{
         });
         EmpPayrollSchema.save(callback)
     };
+
+    /**
+     * @description logging in employee
+     * @param {*} loginInput 
+     * @param {*} callback 
+     */
+    login = (loginInput, callback) =>{
+        registerUser.findOne({'emailId':loginInput.emailId},(error,data)=>{
+            if(error){
+                return callback(error,null);
+            }else if (!data){
+                return callback("Invalid credentails",null)
+            }
+            return callback(null, data);
+        })
+    }
 }
 
 module.exports = new EmpModel();

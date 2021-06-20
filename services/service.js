@@ -1,3 +1,4 @@
+const model = require('../app/models/model.js');
 const EmpPayrollModel = require('../app/models/model.js');
 
 /**
@@ -15,6 +16,14 @@ class EmpService{
                  callback(error, null)
                  :
                  callback(null, data)    
+        })
+    }
+
+    login = (loginInput, callback) =>{
+        model.login(loginInput,(error, data) =>{
+            return error ?
+            callback(error, null)
+            : callback(null, data)
         })
     }
 }

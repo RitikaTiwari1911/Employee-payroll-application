@@ -51,6 +51,31 @@ class EmpPayrollController{
             }));
         });
     }
+
+    /**
+     * @description logging employee in via email id and password
+     * @param {*} req 
+     * @param {*} res 
+     */
+    empLogin = (req,res) =>{
+        const loginInput = {
+            emailId: req.body.emailId,
+            password: req.body.password
+        }
+
+        EmpService.login(loginInput,(error,data)=>{
+            return ((error) ?
+            res.status(200).send({
+                success: false,
+                message: "Invalid credential"
+            }) :
+            res.send({
+                success: true,
+                message: "Login successful!",
+                data: data
+            }));
+        });
+    }
 }
 
 module.exports = new EmpPayrollController();

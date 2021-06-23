@@ -34,6 +34,8 @@ const EmpPayrollSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model('EmployeePayroll',EmpPayrollSchema);
+
+
 //Encrypting password
 EmpPayrollSchema.pre("save",async function(next){
     //This will hash the password if the password is modified by the user in future
@@ -52,17 +54,17 @@ class EmpModel{
      * @param {*} callback 
      */
     create = (empData, callback) =>{
-        const EmpPayrollSchema = new registerUser({
+        const EmpPayrollData = new registerUser({
             firstName: empData.firstName,
             lastName: empData.lastName,
             emailId: empData.emailId,
             password: empData.password
         });
-        EmpPayrollSchema.save(callback)
+        EmpPayrollData.save(callback)
     };
 
     /**
-     * @description logging in employee
+     * @description logging in employee 
      * @param {*} loginInput 
      * @param {*} callback 
      */

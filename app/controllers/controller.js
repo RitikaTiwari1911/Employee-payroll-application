@@ -17,7 +17,6 @@ const { empValidation } = require('../middleware/empValidation.js')
  */
 
 class EmpPayrollController{
-    //Validating user input
     registerEmp = (req,res) => {
         const validateEmp = empValidation.validate(req.body)
         if(validateEmp.error){
@@ -30,14 +29,10 @@ class EmpPayrollController{
             emailId: req.body.emailId,
             password: req.body.password
         }
-
         const empResponse = {
         }
 
         EmpService.createEmp(employeePayrollData, (error, data) => {
-            /**
-             * Checking if the user already exists
-             */
             return ((error) ?
                 res.status(500).send({
                     success: false,
@@ -62,10 +57,8 @@ class EmpPayrollController{
             emailId: req.body.emailId,
             password: req.body.password
         }
-
         EmpService.login(loginInput,(error,data)=>{
-            return ((error) ?
-            res.status(200).send({
+            return ((error) ? res.status(500).send({
                 success: false,
                 message: "Invalid credential"
             }) :

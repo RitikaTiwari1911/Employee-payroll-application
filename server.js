@@ -1,10 +1,17 @@
 const express = require('express');
 require('dotenv').config();
+
 //create express app 
 const app = express();
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./app/swagger/swagger.json')
+
+//middleware has access to req and res
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
+
+app.use('/api-docs',swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //configuring the database
 const dbConnect = require('./config/database.config');
@@ -12,6 +19,7 @@ dbConnect();
 
 //Require routes
 require('./app/routes/routes.js')(app);
+
 
 //defining a simple route
 app.get('/',(req,res) => {

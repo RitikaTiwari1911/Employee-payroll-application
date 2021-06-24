@@ -10,7 +10,7 @@ class Helper{
      */
     generateToken(loginInput){
         return jwt.sign(loginInput, process.env.SECRET_KEY,{
-            expiresIn: '1500s'
+            expiresIn: '3000s'
         });
     }
 

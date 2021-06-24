@@ -26,15 +26,16 @@ class EmpService{
      * @param {*} callback 
      */
     login = (loginInput, callback) =>{
-        const token = helper.generateToken({loginInput})
-
+        
         empPayrollModel.login(loginInput,(error, data) =>{
             if (error){
                 callback(error, null);
             }
             else if(helper.checkByBcrypt(loginInput.password,data.password)){
                 return callback("Incorrect password! Please provide the correct password",null);
+                
             }
+            const token = helper.generateToken({loginInput})
             return callback(null,token);
         })
     }

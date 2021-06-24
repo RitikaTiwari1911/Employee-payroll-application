@@ -29,12 +29,9 @@ class EmpPayrollController{
             emailId: req.body.emailId,
             password: req.body.password
         }
-        const empResponse = {
-        }
-
         empService.createEmp(employeePayrollData, (error, data) => {
             return ((error) ?
-                res.status(500).send({
+                res.status(400).send({
                     success: false,
                     message: "Email already exists!"
                 }) :
@@ -42,7 +39,7 @@ class EmpPayrollController{
             res.send({
                 success: true,
                 message: "New employee added!!",
-                data: empResponse.data = data
+                data: data
             }));
         });
     }

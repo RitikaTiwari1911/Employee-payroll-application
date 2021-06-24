@@ -1,13 +1,11 @@
 const mongoose = require("mongoose");
+require('dotenv').config();
 
 module.exports = () => {
-
-    const url = 'mongodb://localhost:27017/employee-payroll-app';
-
-    // connecting database
     mongoose.Promise = global.Promise;
 
-    return mongoose.connect(url, {
+    // connecting database
+    mongoose.connect(process.env.URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true
@@ -17,4 +15,6 @@ module.exports = () => {
         console.log("Error, Connection establishment failed", error);
         process.exit();
     });
+
+    return mongoose.connection;
 } 

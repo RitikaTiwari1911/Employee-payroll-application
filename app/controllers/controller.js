@@ -6,8 +6,8 @@
  * @since        14/06/2021  
 -----------------------------------------------------------------------------------------------*/
 
-const EmpService = require('../../services/service.js');
-const { empValidation } = require('../middleware/empValidation.js')
+const empService = require('../../services/service.js');
+const { empValidation } = require('../middleware/empValidation.js');
 
 /**
  * @description Create and save new employee
@@ -32,7 +32,7 @@ class EmpPayrollController{
         const empResponse = {
         }
 
-        EmpService.createEmp(employeePayrollData, (error, data) => {
+        empService.createEmp(employeePayrollData, (error, data) => {
             return ((error) ?
                 res.status(500).send({
                     success: false,
@@ -57,8 +57,8 @@ class EmpPayrollController{
             emailId: req.body.emailId,
             password: req.body.password
         }
-        EmpService.login(loginInput,(error,data)=>{
-            return ((error) ? res.status(500).send({
+        empService.login(loginInput,(error,data)=>{
+            return ((error) ? res.status(400).send({
                 success: false,
                 message: "Invalid credential"
             }) :

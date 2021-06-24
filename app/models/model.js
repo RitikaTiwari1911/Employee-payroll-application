@@ -10,14 +10,16 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs')
 
 //schema for the manner in which the data wwill be stored in the database
-const EmpPayrollSchema = mongoose.Schema({
+const empPayrollSchema = mongoose.Schema({
     firstName: { 
         type: String,
         required: true,
+        validate: /^[a-zA-Z ]{3,30}$/
     },
     lastName: {
         type: String,
         required: true,
+        validate: /^[a-zA-Z ]{3,30}$/
     },
     emailId: {
         type: String,
@@ -33,11 +35,11 @@ const EmpPayrollSchema = mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('EmployeePayroll',EmpPayrollSchema);
+module.exports = mongoose.model('EmployeePayroll',empPayrollSchema);
 
 
 //Encrypting password
-EmpPayrollSchema.pre("save",async function(next){
+empPayrollSchema.pre("save",async function(next){
     //This will hash the password if the password is modified by the user in future
     if(this.isModified("password")){
         this.password = await bcrypt.hash(this.password, 10)
@@ -45,22 +47,22 @@ EmpPayrollSchema.pre("save",async function(next){
     next();
 })
 
-const registerUser = mongoose.model('registerUser',EmpPayrollSchema)
+const registerUser = mongoose.model('registerUser',empPayrollSchema)
 
-class EmpModel{
+class empModel{
     /**
      * @description registering employee in the database
      * @param {*} empData 
      * @param {*} callback 
      */
     create = (empData, callback) =>{
-        const EmpPayrollData = new registerUser({
+        const empPayrollData = new registerUser({
             firstName: empData.firstName,
             lastName: empData.lastName,
             emailId: empData.emailId,
             password: empData.password
         });
-        EmpPayrollData.save(callback)
+        empPayrollData.save(callback)
     };
 
     /**
@@ -80,4 +82,4 @@ class EmpModel{
     }
 }
 
-module.exports = new EmpModel();
+module.exports = new empModel();

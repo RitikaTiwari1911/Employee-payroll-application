@@ -10,33 +10,60 @@ chai.use(chaiHttp);
 
 describe('Employee Payroll', () =>{
     /**
-     * Test  the POST route
+     * Test  the POST route for new employee
      */
 
     describe("POST/registerEmp", () => {
          it("It should POST a task", (done)=>{
              const task = {
-                firstName: "Ayushi",
-                lastName: "Thapa",
-                emailId: "ayu123@gmail.com",
-                password: "string1234"
+                firstName: "Raj",
+                lastName: "Chauhan",
+                emailId: "rajch123475@gmail.com",
+                password: "stringraj1234"
              }
              chai.request(server)
-             .post('/registerEmp')
+             .post('/empPayroll/registerEmp')
              .send(task)
-             .end((err, response) => {
+             .end((error, res) => {
                     //response.should.have.status(200);
-                    response.should.have.a("object");
-                    response.should.have.property("firstName").eq("Ayushi");
-                    response.should.have.property("lastName").eq("Thapa");
-                    response.should.have.property("emailId").eq("ayu123@gmail.com");
-                    response.should.have.property("password").eq("string1234");
-                    response.should.have.property("success").eq(true);
-                    response.should.have.property("message").eq("New employee added!!");
+                    res.should.be.a("object");
+                    res.body.should.have.property("success").eql(true);
+                    res.body.should.have.property("message").eql('New employee added!!');
+                    //res.body.have.property("data").eql(data);
+                    if(error){
+                        return done(error);
+                    }
             done();
             });
          });
     })
 
-
+    /**
+     * This test should pass when the employee is already registered
+     */
+    describe("POST/registerEmp", () => {
+        it("It should NOT POST a task", (done)=>{
+            const task = {
+                firstName: "Mahima",
+                lastName: "Agarwal",
+                emailId: "mahima152@gmail.com",
+                password: "string12345"
+            }
+            chai.request(server)
+            .post('/empPayroll/registerEmp')
+            .send(task)
+            .end((error, res) => {
+                   //response.should.have.status(400);
+                   res.should.be.a("object");
+                   res.body.should.have.property("success").eql(false);
+                   res.body.should.have.property("message").eql('Email already exists!');
+                   if(error){
+                       return done(error);
+                   }
+           done();
+           });
+        });
+   })
 })
+
+

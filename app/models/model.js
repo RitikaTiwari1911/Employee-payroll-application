@@ -80,6 +80,16 @@ class empModel{
             return callback(null, data);
         })
     }
+
+    /**
+     * @description Using find() which is a mongoose method
+     * @param {*} callback 
+     */
+    findAll = (callback) =>{
+        registerUser.find({},(error, data) =>{
+            return((error)? (callback(error, null)): (callback(null, data)));
+        });
+    }
 }
 
 module.exports = new empModel();

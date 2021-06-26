@@ -39,6 +39,16 @@ class EmpService{
             return callback(null,token);
         })
     }
+
+    /**
+     * @description This function will fetch daata from the database
+     * @param {*} callback 
+     */
+    getAllEmpData(callback){
+        empPayrollModel.findAll((error, data)=>{
+            return ((error)? callback(error,null): callback(null,data));
+        });
+    }
 }
 
 module.exports = new EmpService();

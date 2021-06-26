@@ -14,5 +14,8 @@ module.exports = (app) => {
 
     //employee login
     app.post('/empLogin', employeePayroll.empLogin);
+
+    //get all employees
+    app.get('/readAllData',employeePayroll.readAllData);
     
 }

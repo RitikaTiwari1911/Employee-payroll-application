@@ -66,6 +66,25 @@ class EmpPayrollController{
             }));
         });
     }
+
+    /**
+     * @description This function will fetch the data of all the employees
+     * @param {*} req 
+     * @param {*} res 
+     */
+    readAllData = (req,res)=>{
+        empService.getAllEmpData((error,data)=>{
+            return((error) ? res.status(400).send({
+                success: false,
+                message: "Some error occured"
+            }) :
+            res.send({
+                success: true,
+                message: "Employee information retrieved successfully!",
+                data: data
+            }));
+        });
+    }
 }
 
 module.exports = new EmpPayrollController();

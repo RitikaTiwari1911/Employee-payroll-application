@@ -14,7 +14,7 @@ describe('Employee Payroll', () =>{
      */
 
     describe("POST/registerEmp", () => {
-         it("It should POST a task", (done)=>{
+         it("This test should pass when user is trying to register with a fresh email id", (done)=>{
              const task = {
                 firstName: "Raj",
                 lastName: "Chauhan",
@@ -42,7 +42,7 @@ describe('Employee Payroll', () =>{
      * This test should pass when the employee is already registered
      */
     describe("POST/registerEmp", () => {
-        it("It should NOT POST a task", (done)=>{
+        it("This test should pass when the user is trying to register with the already registered email id", (done)=>{
             const task = {
                 firstName: "Mahima",
                 lastName: "Agarwal",
@@ -64,6 +64,28 @@ describe('Employee Payroll', () =>{
            });
         });
    })
-})
 
+   /**
+    * This test should pass for employee login
+    * It will pass when the employee is already registered and it's details are stored in the database
+    */
+   describe("POST/loginEmp",() =>{
+        it("This test should pass when the user is logging in with the correct email id and the password",(done)=>{
+            const task = {
+                emailId: "rajch123475@gmail.com",
+                password: "stringraj1234"
+            }
+            chai.request(server)
+            .post('/empPayroll/empLogin')
+            .send(task)
+            .end((error,res)=>{
+                res.should.be.a('object');
+                res.body.should.have.property("success").eql(true);
+                res.body.should.have.property("message").eql("Login successful!");
+                res.body.should.have.property("data");
+            done();    
+            });
+        });
+    })
+})
 

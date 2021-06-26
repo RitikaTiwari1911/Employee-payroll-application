@@ -41,12 +41,18 @@ class EmpService{
     }
 
     /**
-     * @description This function will fetch daata from the database
+     * @description This function will fetch data from the database
      * @param {*} callback 
      */
-    getAllEmpData(callback){
+    getAllEmpData = (callback) =>{
         empPayrollModel.findAll((error, data)=>{
             return ((error)? callback(error,null): callback(null,data));
+        });
+    }
+
+    getEmpDataById = (empData, callback) =>{
+        empPayrollModel.findOne(empData,(error,data)=>{
+            return((error)? callback(error,null) : callback(null,data));
         });
     }
 }

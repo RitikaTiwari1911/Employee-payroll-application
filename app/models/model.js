@@ -90,6 +90,12 @@ class empModel{
             return((error)? (callback(error, null)): (callback(null, data)));
         });
     }
+
+    findOne = (empData, callback) =>{
+        registerUser.findById({'_id':empData._id},(error, data) =>{
+            return((error)?(callback(error,null)): (callback(null,data)));
+        });
+    }
 }
 
 module.exports = new empModel();

@@ -28,15 +28,13 @@ class EmpService{
     login = (loginInput, callback) =>{
         
         empPayrollModel.login(loginInput,(error, data) =>{
-            if (error){
+            if(helper.checkByBcrypt(loginInput.password,data.password)){
+                const token = helper.generateToken({loginInput})
+                return (!token)? callback("Incorrect password! Please provide the correct password",null) : callback(null, token);  
+            }
+            else if (error){
                 callback(error, null);
             }
-            else if(helper.checkByBcrypt(loginInput.password,data.password)){
-                return callback("Incorrect password! Please provide the correct password",null);
-                
-            }
-            const token = helper.generateToken({loginInput})
-            return callback(null,token);
         })
     }
 
@@ -53,6 +51,12 @@ class EmpService{
     getEmpDataById = (empData, callback) =>{
         empPayrollModel.findOne(empData,(error,data)=>{
             return((error)? callback(error,null) : callback(null,data));
+        });
+    }
+
+    updateEmpData = (empId, empPayrollData, callback) =>{
+        empPayrollModel.updateInfo(empId, empPayrollData, (error, data) =>{
+            return((error)?callback(error,null):callback(null, data));
         });
     }
 }

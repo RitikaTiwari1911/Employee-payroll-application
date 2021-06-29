@@ -22,7 +22,7 @@ class Helper{
      * @returns 
      */
     checkByBcrypt(loginData, databaseData){
-        return(loginData && databaseData) ? (!bcrypt.compareSync(loginData, databaseData)):false;
+        return(loginData && databaseData) ? (bcrypt.compareSync(loginData, databaseData)):false;
     } 
 
     /**

@@ -96,6 +96,19 @@ class empModel{
             return((error)?(callback(error,null)): (callback(null,data)));
         });
     }
+
+    updateInfo(empId, employeePayrollData, callback) {
+        registerUser.findByIdAndUpdate(empId.empDataById,{
+            firstName: employeePayrollData.firstName,
+            lastName: employeePayrollData.lastName,
+            emailId: employeePayrollData.emailId,
+            password: employeePayrollData.password
+        },(error, data)=>{
+            return((error)?(callback(error,null)): callback(null,data));
+        });
+    }
 }
+
+            
 
 module.exports = new empModel();

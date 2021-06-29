@@ -18,30 +18,37 @@ const { empValidation } = require('../middleware/empValidation.js');
 
 class EmpPayrollController{
     registerEmp = (req,res) => {
-        const validateEmp = empValidation.validate(req.body)
-        if(validateEmp.error){
-            res.status(400).send({message:validateEmp.error.details[0].message})
-        }
+        try{
+            const validateEmp = empValidation.validate(req.body)
+            if(validateEmp.error){
+                res.status(400).send({message:validateEmp.error.details[0].message})
+            }
 
-        const employeePayrollData = {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            emailId: req.body.emailId,
-            password: req.body.password
+            const employeePayrollData = {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                emailId: req.body.emailId,
+                password: req.body.password
+            }
+            empService.createEmp(employeePayrollData, (error, data) => {
+                return ((error) ?
+                    res.status(400).send({
+                        success: false,
+                        message: "Email already exists!"
+                    }) :
+                
+                res.send({
+                    success: true,
+                    message: "New employee added!!",
+                    data: data
+                }));
+            });
+        }catch(error){
+            return res.status(500).send({
+                success: false,
+                message: error.message
+            });
         }
-        empService.createEmp(employeePayrollData, (error, data) => {
-            return ((error) ?
-                res.status(400).send({
-                    success: false,
-                    message: "Email already exists!"
-                }) :
-            
-            res.send({
-                success: true,
-                message: "New employee added!!",
-                data: data
-            }));
-        });
     }
 
     /**
@@ -50,21 +57,28 @@ class EmpPayrollController{
      * @param {*} res 
      */
     empLogin = (req,res) =>{
-        const loginInput = {
-            emailId: req.body.emailId,
-            password: req.body.password
-        }
-        empService.login(loginInput,(error,data)=>{
-            return ((error) ? res.status(400).send({
+        try{
+            const loginInput = {
+                emailId: req.body.emailId,
+                password: req.body.password
+            }
+            empService.login(loginInput,(error,data)=>{
+                return ((error) ? res.status(400).send({
+                    success: false,
+                    message: "Invalid credential"
+                }) :
+                res.send({
+                    success: true,
+                    message: "Login successful!",
+                    data: data
+                }));
+            });
+        }catch(error){
+            return res.status(500).send({
                 success: false,
-                message: "Invalid credential"
-            }) :
-            res.send({
-                success: true,
-                message: "Login successful!",
-                data: data
-            }));
-        });
+                message: error.message
+            });
+        }
     }
 
     /**
@@ -73,6 +87,7 @@ class EmpPayrollController{
      * @param {*} res 
      */
     readAllData = (req,res)=>{
+    try{
         empService.getAllEmpData((error,data)=>{
             return((error) ? res.status(400).send({
                 success: false,
@@ -84,22 +99,100 @@ class EmpPayrollController{
                 data: data
             }));
         });
-    }
-
-    readDataById = (req,res) =>{
-        var empId = req.params
-        empService.getEmpDataById(empId,(error,data)=>{
-            return((error)? res.status(400).send({
-                success: false,
-                message: "Some error occured"
-            }) :
-            res.send({
-                success: true,
-                message: "Employee information retrieved successfully!",
-                data: data
-            }));
+    } catch(error){
+        return res.send(500).send({
+            success: false,
+            message: error.message
         });
     }
+}
+
+
+    /**
+     * @description This function will fetch employee according to the emp id
+     * @param {*} req 
+     * @param {*} res 
+     */
+    readDataById = (req,res) =>{
+        try{
+            var empId = req.params
+            empService.getEmpDataById(empId,(error,data)=>{
+                return((error)? res.status(400).send({
+                    success: false,
+                    message: "Some error occured"
+                }) :
+                res.send({
+                    success: true,
+                    message: "Employee information retrieved successfully!",
+                    data: data
+                }));
+            });
+        }catch(error){
+            return res.send(500).send({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
+
+    /**
+     * @description This function allows us to update employee through empId
+     * @param {*} req 
+     * @param {*} res 
+     */
+    updateEmp = (req,res) =>{
+        try{
+            const validateEmp = empValidation.validate(req.body);
+            if(validateEmp.error){
+                res.status(400).send({message:validateEmp.error.details[0].message});
+            }
+
+            let empId = req.params;
+            const employeePayrollData = {
+                id: req.params.id,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                emailId: req.body.emailId,
+                password: req.body.password
+            }
+
+            empService.updateEmpData(empId, employeePayrollData,(error,data)=>{
+                return((error)? res.status(400).send({
+                    success: false,
+                    message: "Some error occured while updating the employee"
+                }) :
+                send({
+                    success: true,
+                    message: "Employee updated successfully!",
+                    data: data
+                }));
+            });
+        }catch(error){
+            return res.send(500).send({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
+
+
+  //  deleteEmp = (req,res) =>{
+  //      let empData = req.params;
+  //      console.log("Delete employee",empData);
+  //      empService.deleteEmpData(empData,(error,data)=>{
+  //          return((error)?res.status(400).send({
+  //              success:false,
+  //              message: "Error occured while deleting employee"
+  //          }):
+  //          send({
+  //              success: true,
+  //              message: "Employee deleted successfully!",
+  //              data: data
+  //          }));
+  //      });
+  //  }
 }
 
 module.exports = new EmpPayrollController();

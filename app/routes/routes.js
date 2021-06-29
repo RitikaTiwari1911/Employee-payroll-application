@@ -10,12 +10,21 @@ const employeePayroll = require('../controllers/controller.js');
 module.exports = (app) => {
     
     //registering a new employee
-    app.post('/registerEmp', employeePayroll.registerEmp);
+    app.post('/empPayroll/registerEmp', employeePayroll.registerEmp);
 
     //employee login
-    app.post('/empLogin', employeePayroll.empLogin);
+    app.post('/empPayroll/empLogin', employeePayroll.empLogin);
 
     //get all employees
-    app.get('/readAllData',employeePayroll.readAllData);
+    app.get('/empPayroll/readAllData', employeePayroll.readAllData);
+
+    //get employee by id
+    app.get('/empPayroll/readDataById', employeePayroll.readDataById)
+
+    //update employee by id
+    app.put('/empPayroll/updateEmp',employeePayroll.updateEmp);
+
+    //delete employee by id
+   // app.delete('/empPayroll/deleteEmp', employeePayroll.deleteEmp);
     
 }

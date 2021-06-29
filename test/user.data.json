@@ -1,0 +1,26 @@
+{
+    "empLogin": {
+        "emailId":"skhan123@gmail.com",
+        "password":"sheereeen123"
+    },
+    
+    "empLoginNegative": {
+        "emailId": "rajch123475@gmail.com",
+        "password": "st44ringraj1234abc"
+    },
+
+    "registerEmp": {
+        "firstName": "Raj",
+        "lastName": "Chauhan",
+        "emailId": "test55@gmail.com",
+        "password": "stringraj1234"
+    },
+    
+    "registerEmpNegative": {
+        "firstName": "Mahima",
+        "lastName": "Agarwal",
+        "emailId": "mahima152@gmail.com",
+        "password": "string12345"
+    }
+}
+    

@@ -39,5 +39,8 @@ $ nodemon start
 ### npm start
 Runs the app Open http://localhost:3000 to view it in the browser.
 
+### npm test
+Test can be run through mocha.
+
 ## Author
 Ritika

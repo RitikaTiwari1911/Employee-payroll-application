@@ -6,6 +6,7 @@ const app = express();
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./app/swagger/swagger.json')
+const logger = require('./config/logger')
 
 //middleware has access to req and res
 app.use(express.urlencoded({extended: true}))
@@ -30,7 +31,7 @@ app.get('/',(req,res) => {
 
 //user can visit the url once the server is listening on port 
 app.listen(process.env.PORT,() => {
-    console.log(`Server is listening at port ${process.env.PORT}`);
+    logger.log("info", "Server is listening at port ${process.env.PORT}");
 });
 
 module.exports = app;

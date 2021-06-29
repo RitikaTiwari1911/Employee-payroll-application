@@ -1,0 +1,4 @@
+{"level":"info","message":"Server is listening at port 3000","timestamp":"2021-06-29T05:13:08.619Z"}
+{"level":"info","message":"Server is listening at port ${process.env.PORT}","timestamp":"2021-06-29T05:13:42.296Z"}
+{"level":"info","message":"Server is listening at port ${process.env.PORT}","timestamp":"2021-06-29T05:13:57.841Z"}
+{"level":"info","message":"Server is listening at port ${process.env.PORT}","timestamp":"2021-06-29T05:14:47.425Z"}

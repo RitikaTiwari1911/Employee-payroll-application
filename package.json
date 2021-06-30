@@ -4,7 +4,7 @@
   "description": "This is an application for the employee payroll",
   "main": "server.js",
   "scripts": {
-    "test": " mocha",
+    "test": "nyc mocha",
     "start": "nodemon server.js",
     "debug": "nodemon --inspect server.js"
   },

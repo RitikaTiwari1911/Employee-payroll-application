@@ -39,7 +39,7 @@
         }
       }
     },
-    "/empPayroll/readAllData": {
+    "/getEmployees": {
       "get": {
         "tags": [],
         "description": "",
@@ -62,7 +62,7 @@
         }
       }
     },
-    "/empPayroll/readDataById": {
+    "/getEmployee/{employeeId}": {
       "get": {
         "tags": [],
         "description": "",
@@ -93,7 +93,7 @@
         }
       }
     },
-    "/empPayroll/updateEmp": {
+    "/updateEmployee/{employeeId}": {
       "put": {
         "tags": [],
         "description": "",
@@ -132,7 +132,7 @@
         }
       }
     },
-    "/empPayroll/deleteEmp": {
+    "/deleteEmployee/{employeeId}": {
       "delete": {
         "tags": [],
         "description": "",
@@ -163,7 +163,7 @@
         }
       }
     },
-    "/empPayroll/registerEmp": {
+    "/registerEmp": {
       "post": {
         "tags": [],
         "description": "",
@@ -190,7 +190,7 @@
         }
       }
     },
-    "/empPayroll/empLogin": {
+    "/empLogin": {
       "post": {
         "tags": [],
         "description": "",

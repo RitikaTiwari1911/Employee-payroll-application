@@ -15,9 +15,13 @@ class EmpService{
      * @param {*} callback 
      */
     createEmp = (empData, callback) => {
-        empPayrollModel.create(empData, (error, data) => {
-                return error? callback(error, null) : callback(null, data)    
-        })
+        try{
+            empPayrollModel.create(empData, (error, data) => {
+                    return error? callback(error, null) : callback(null, data)    
+            })
+        }catch(error){
+            return callback(error,null);
+        }
     }
 
     /**
@@ -26,16 +30,19 @@ class EmpService{
      * @param {*} callback 
      */
     login = (loginInput, callback) =>{
-        
-        empPayrollModel.login(loginInput,(error, data) =>{
-            if(helper.checkByBcrypt(loginInput.password,data.password)){
-                const token = helper.generateToken({loginInput})
-                return (!token)? callback("Incorrect password! Please provide the correct password",null) : callback(null, token);  
-            }
-            else if (error){
-                callback(error, null);
-            }
-        })
+        try{
+            empPayrollModel.login(loginInput,(error, data) =>{
+                if(helper.checkByBcrypt(loginInput.password,data.password)){
+                    const token = helper.generateToken({loginInput})
+                    return (!token)? callback("Incorrect password! Please provide the correct password",null) : callback(null, token);  
+                }
+                else if (error){
+                    callback(error, null);
+                }
+            })
+        }catch(error){
+            return callback(error,null);
+        }
     }
 
     /**
@@ -43,21 +50,49 @@ class EmpService{
      * @param {*} callback 
      */
     getAllEmpData = (callback) =>{
-        empPayrollModel.findAll((error, data)=>{
-            return ((error)? callback(error,null): callback(null,data));
-        });
+        try{
+            empPayrollModel.findAll((error, data)=>{
+                return ((error)? callback(error,null): callback(null,data));
+            });
+        }catch(error){
+            return callback(error,null);
+        }
     }
 
-    getEmpDataById = (empData, callback) =>{
-        empPayrollModel.findOne(empData,(error,data)=>{
-            return((error)? callback(error,null) : callback(null,data));
-        });
+    /**
+     * @description finding a single employee
+     * @param {*} empData 
+     * @param {*} callback 
+     * @returns 
+     */
+    getEmpDataById = (empId, callback) =>{
+        try{
+            empPayrollModel.findOne(empId,(error,data)=>{
+                return((error)? callback(error,null) : callback(null,data));
+            });
+        }catch(error){
+            return callback(error,null);
+        }
     }
 
     updateEmpData = (empId, empPayrollData, callback) =>{
-        empPayrollModel.updateInfo(empId, empPayrollData, (error, data) =>{
-            return((error)?callback(error,null):callback(null, data));
-        });
+        try{
+            empPayrollModel.updateInfo(empId, empPayrollData, (error, data) =>{
+                return((error)?callback(error,null):callback(null, data));
+            });
+        }catch(error){
+            return callback(error,null);
+    }
+}
+
+    deleteEmpData = (empId, callback) =>{
+        try{
+            empPayrollModel.deleteById(empId,(error, data) =>{
+                return((error)?callback(error, null):callback(null,data));
+            });
+        }catch(error){
+            return callback(error,null);
+        }
     }
 }
 

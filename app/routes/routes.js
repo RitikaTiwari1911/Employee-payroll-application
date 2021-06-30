@@ -19,10 +19,10 @@ module.exports = (app) => {
     app.get('/empPayroll/readAllData', employeePayroll.readAllData);
 
     //get employee by id
-    app.get('/empPayroll/readDataById', employeePayroll.readDataById)
-
+    app.get('/empPayroll/readDataById/:empId', employeePayroll.readDataById);
+    
     //update employee by id
-    app.put('/empPayroll/updateEmp',employeePayroll.updateEmp);
+    app.put('/empPayroll/updateEmp/:empId',employeePayroll.updateEmp);
 
     //delete employee by id
    // app.delete('/empPayroll/deleteEmp', employeePayroll.deleteEmp);

@@ -18,7 +18,10 @@ const { empValidation } = require('../middleware/empValidation.js');
 
 class EmpPayrollController{
     registerEmp = (req,res) => {
-        try{
+        console.log("hello 1",req.body)
+        
+            console.log("hello 1",req.body)
+            
             const validateEmp = empValidation.validate(req.body)
             if(validateEmp.error){
                 res.status(400).send({message:validateEmp.error.details[0].message})
@@ -43,12 +46,12 @@ class EmpPayrollController{
                     data: data
                 }));
             });
-        }catch(error){
-            return res.status(500).send({
-                success: false,
-                message: error.message
-            });
-        }
+        //}catch(error){
+        //    return res.status(500).send({
+        //        success: false,
+        //        message: error.message
+        //    });
+        //}
     }
 
     /**
@@ -115,7 +118,7 @@ class EmpPayrollController{
      */
     readDataById = (req,res) =>{
         try{
-            var empId = req.params
+            var empId = req.params.empId;
             empService.getEmpDataById(empId,(error,data)=>{
                 return((error)? res.status(400).send({
                     success: false,
@@ -148,7 +151,7 @@ class EmpPayrollController{
                 res.status(400).send({message:validateEmp.error.details[0].message});
             }
 
-            let empId = req.params;
+            let empId = req.params.empId;
             const employeePayrollData = {
                 id: req.params.id,
                 firstName: req.body.firstName,
@@ -162,14 +165,14 @@ class EmpPayrollController{
                     success: false,
                     message: "Some error occured while updating the employee"
                 }) :
-                send({
+                res.send({
                     success: true,
                     message: "Employee updated successfully!",
                     data: data
                 }));
             });
         }catch(error){
-            return res.send(500).send({
+            return res.status(500).send({
                 success: false,
                 message: error.message
             });
@@ -178,21 +181,20 @@ class EmpPayrollController{
 
 
 
-  //  deleteEmp = (req,res) =>{
-  //      let empData = req.params;
-  //      console.log("Delete employee",empData);
-  //      empService.deleteEmpData(empData,(error,data)=>{
-  //          return((error)?res.status(400).send({
-  //              success:false,
-  //              message: "Error occured while deleting employee"
-  //          }):
-  //          send({
-  //              success: true,
-  //              message: "Employee deleted successfully!",
-  //              data: data
-  //          }));
-  //      });
-  //  }
+    deleteEmp = (req,res) =>{
+        let empId = req.params;
+        empService.deleteEmpData(empId,(error,data)=>{
+            return((error)?res.status(400).send({
+                success:false,
+                message: "Error occured while deleting employee"
+            }):
+            res.send({
+                success: true,
+                message: "Employee deleted successfully!",
+                data: data
+            }));
+        });
+    }
 }
 
 module.exports = new EmpPayrollController();

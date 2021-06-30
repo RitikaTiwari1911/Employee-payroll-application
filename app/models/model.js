@@ -91,14 +91,14 @@ class empModel{
         });
     }
 
-    findOne = (empData, callback) =>{
-        registerUser.findById({'_id':empData._id},(error, data) =>{
+    findOne = (empId, callback) =>{
+        registerUser.findById(empId,(error, data) =>{
             return((error)?(callback(error,null)): (callback(null,data)));
         });
     }
 
     updateInfo(empId, employeePayrollData, callback) {
-        registerUser.findByIdAndUpdate(empId.empDataById,{
+        registerUser.findByIdAndUpdate(empId,{
             firstName: employeePayrollData.firstName,
             lastName: employeePayrollData.lastName,
             emailId: employeePayrollData.emailId,
@@ -107,7 +107,14 @@ class empModel{
             return((error)?(callback(error,null)): callback(null,data));
         });
     }
+
+    deleteById = (empId, callback) =>{
+        registerUser.findByIdAndRemove(empId,(error, data)=>{
+            return((error)? (callback(error, null)):(callback(null, data)));
+        })
+    }
 }
+
 
             
 

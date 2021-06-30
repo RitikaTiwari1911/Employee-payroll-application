@@ -96,22 +96,39 @@ describe('Employee Payroll', () =>{
     });
 })
 
-   // /**
-   //  * This test should pass when user is trying to retrieve the data of all the employees
-   //  */
-   // describe("/empPayroll/readAllData",() =>{
-   //     it("This test should pass when the user is retrieving the data of all the employees",(done)=>{
-   //         chai.request(server)
-   //         .get('/empPayroll/readAllData')
-   //         .set('token',token)
-   //         .end((error,res)=>{
-   //             res.should.be.a('object');
-   //             res.body.should.have.property("success").eql(true);
-   //             res.body.should.have.property("message").eql("Employee information retrieved successfully!");
-   //             res.body.should.have.property("data");
-   //         done();    
-   //         });
-   //     });
-   // })
+    /**
+     * This test should pass when user is trying to retrieve the data of all the employees
+     */
+    describe("/empPayroll/readAllData",() =>{
+        it("This test should pass when the user is retrieving the data of all the employees",(done)=>{
+            chai.request(server)
+            .get('/empPayroll/readAllData')
+            .end((error,res)=>{
+                res.should.be.a('object');
+                res.body.should.have.property("success").eql(true);
+                res.body.should.have.property("message").eql("Employee information retrieved successfully!");
+                res.body.should.have.property("data");
+            done();    
+            });
+        });
+    })
 })
+
+describe('GET /empPayroll/readDataById/:empId', () => {
+    it("It should get employee details by ID", (done) => {
+        const readEmpDataById = testData.empId
+        chai.request(server)
+            .get("/empPayroll/readDataById/:empId"+readEmpDataById)
+            .end((error, res) => {
+                res.body.should.be.a('object')
+                res.should.have.status(400)
+                res.body.should.have.property("success").eql(false);
+                res.body.should.have.property("message").eql("Some error occured")          
+            done()
+        });
+    });
+})
+
+    
+    
 

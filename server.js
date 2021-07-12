@@ -1,5 +1,7 @@
 const express = require('express');
 require('dotenv').config();
+var cors =require('cors')
+
 
 //create express app 
 const app = express();
@@ -7,6 +9,7 @@ const app = express();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./app/swagger/swagger.json')
 const logger = require('./config/logger')
+app.use(cors())
 
 //middleware has access to req and res
 app.use(express.urlencoded({extended: true}))

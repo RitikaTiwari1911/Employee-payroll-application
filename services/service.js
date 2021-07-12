@@ -8,7 +8,7 @@
 const empPayrollModel = require('../app/models/model');
 const helper = require('../app/middleware/helperFile');
 
-class EmpService{
+class empService{
     /**
      * @description this registers the employees
      * @param {*} empData 
@@ -96,4 +96,4 @@ class EmpService{
     }
 }
 
-module.exports = new EmpService();
+module.exports = new empService();

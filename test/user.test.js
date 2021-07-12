@@ -114,6 +114,9 @@ describe('Employee Payroll', () =>{
     })
 })
 
+/**
+ * this test should run when user is trying to fetch a wrong id
+ */
 describe('GET /empPayroll/readDataById/:empId', () => {
     it("It should get employee details by ID", (done) => {
         const readEmpDataById = testData.empId

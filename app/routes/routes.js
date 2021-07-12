@@ -6,25 +6,26 @@
  * @since        14/06/2021  
 -----------------------------------------------------------------------------------------------*/
 const employeePayroll = require('../controllers/controller.js');
+const helperFile = require('../middleware/helperFile.js');
 
 module.exports = (app) => {
     
     //registering a new employee
-    app.post('/empPayroll/registerEmp', employeePayroll.registerEmp);
+    app.post('/registerEmp', employeePayroll.registerEmp);
 
     //employee login
-    app.post('/empPayroll/empLogin', employeePayroll.empLogin);
+    app.post('/empLogin', employeePayroll.empLogin);
 
     //get all employees
-    app.get('/empPayroll/readAllData', employeePayroll.readAllData);
+    app.get('/readAllData', helperFile.checkToken,  employeePayroll.readAllData);
 
     //get employee by id
-    app.get('/empPayroll/readDataById/:empId', employeePayroll.readDataById);
+    app.get('/readDataById/:empId', helperFile.checkToken, employeePayroll.readDataById);
     
     //update employee by id
-    app.put('/empPayroll/updateEmp/:empId',employeePayroll.updateEmp);
+    app.put('/updateEmp/:empId',helperFile.checkToken, employeePayroll.updateEmp);
 
     //delete employee by id
-   // app.delete('/empPayroll/deleteEmp', employeePayroll.deleteEmp);
+    app.delete('/deleteEmp/:empId',helperFile.checkToken, employeePayroll.deleteEmp);
     
 }

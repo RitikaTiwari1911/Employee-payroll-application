@@ -35,7 +35,7 @@ class Helper{
     checkToken(req, res, next){
         let token = req.get('token');
         return(token)?
-        jwt.verify(token, SECRET_KEY, error =>{
+        jwt.verify(token, process.env.SECRET_KEY, error =>{
             return (error) ? res.status(400).send({message: "Invalid Token"}):next();
         }) : 
         res.status(401).send({message: "Missing token! Unauthorized User!"})

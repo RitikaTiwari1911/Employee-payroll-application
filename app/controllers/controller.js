@@ -17,11 +17,8 @@ const { empValidation } = require('../middleware/empValidation.js');
  */
 
 class EmpPayrollController{
-    registerEmp = (req,res) => {
-        console.log("hello 1",req.body)
-        
-            console.log("hello 1",req.body)
-            
+    registerEmp = (req,res) => {            
+        try{
             const validateEmp = empValidation.validate(req.body)
             if(validateEmp.error){
                 res.status(400).send({message:validateEmp.error.details[0].message})
@@ -46,15 +43,13 @@ class EmpPayrollController{
                     data: data
                 }));
             });
-        //}catch(error){
-        //    return res.status(500).send({
-        //        success: false,
-        //        message: error.message
-        //    });
-        //}
-    }
-
-    /**
+        }catch(error){
+            return res.status(500).send({
+                success: false,
+                message: error.message
+            });
+        }
+    }    /**
      * @description logging employee in via email id and password
      * @param {*} req 
      * @param {*} res 
@@ -102,10 +97,10 @@ class EmpPayrollController{
                 data: data
             }));
         });
-    } catch(error){
-        return res.send(500).send({
-            success: false,
-            message: error.message
+        }catch(error){
+            return res.send(500).send({
+                success: false,
+                message: error.message
         });
     }
 }

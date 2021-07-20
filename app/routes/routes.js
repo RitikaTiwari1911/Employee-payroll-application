@@ -5,16 +5,19 @@
  * @author       Ritika <spk2ritika1911@gmail.com>
  * @since        14/06/2021  
 -----------------------------------------------------------------------------------------------*/
-const employeePayroll = require('../controllers/controller.js');
+const employeePayroll = require('../controllers/employee.js');
 const helperFile = require('../middleware/helperFile.js');
+const user = require('../controllers/user');
 
 module.exports = (app) => {
+    //registering user
+    app.post('/registerUser', user.registerUser);
+
+    //employee login
+    app.post('/userLogin', user.userLogin);
     
     //registering a new employee
     app.post('/registerEmp', employeePayroll.registerEmp);
-
-    //employee login
-    app.post('/empLogin', employeePayroll.empLogin);
 
     //get all employees
     app.get('/readAllData', helperFile.checkToken,  employeePayroll.readAllData);

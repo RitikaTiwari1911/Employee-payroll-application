@@ -6,8 +6,8 @@
  * @since        14/06/2021  
 -----------------------------------------------------------------------------------------------*/
 //connecting to the mongoDB through mongoose
-const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs')
+const mongoose = require('mongoose');
 
 //schema for the manner in which the data wwill be stored in the database
 const empPayrollSchema = mongoose.Schema({
@@ -21,33 +21,28 @@ const empPayrollSchema = mongoose.Schema({
         required: true,
         validate: /^[a-zA-Z ]{3,30}$/
     },
+    department: {
+        type: String,
+        required: true
+    },
+    salary: {
+        type: String,
+        required: true
+    },
     emailId: {
         type: String,
         required: true,
         unique: true
     },
-    password: {
-        type: String,
-        required: true
-    },
+    
 },{
     //Applying time stamp for the data
     timestamps: true
 });
 
-module.exports = mongoose.model('EmployeePayroll',empPayrollSchema);
+//module.exports = mongoose.model('EmployeePayroll',empPayrollSchema);
 
-
-//Encrypting password
-empPayrollSchema.pre("save",async function(next){
-    //This will hash the password if the password is modified by the user in future
-    if(this.isModified("password")){
-        this.password = await bcrypt.hash(this.password, 10)
-    }
-    next();
-})
-
-const registerUser = mongoose.model('registerUser',empPayrollSchema)
+const registerEmp = mongoose.model('registerEmp',empPayrollSchema)
 
 class empModel{
     /**
@@ -56,11 +51,13 @@ class empModel{
      * @param {*} callback 
      */
     create = (empData, callback) =>{
-        const empPayrollData = new registerUser({
+        const empPayrollData = new registerEmp({
             firstName: empData.firstName,
             lastName: empData.lastName,
+            department: empData.department,
+            salary: empData.salary,
             emailId: empData.emailId,
-            password: empData.password
+            //password: empData.password
         });
         empPayrollData.save(callback)
     };
@@ -71,7 +68,7 @@ class empModel{
      * @param {*} callback 
      */
     login = (loginInput, callback) =>{
-        registerUser.findOne({'emailId':loginInput.emailId},(error,data)=>{
+        registerEmp.findOne({'emailId':loginInput.emailId},(error,data)=>{
             if(error){
                 return callback(error,null);
             }else if (!data){
@@ -86,19 +83,19 @@ class empModel{
      * @param {*} callback 
      */
     findAll = (callback) =>{
-        registerUser.find({},(error, data) =>{
+        registerEmp.find({},(error, data) =>{
             return((error)? (callback(error, null)): (callback(null, data)));
         });
     }
 
     findOne = (empId, callback) =>{
-        registerUser.findById(empId,(error, data) =>{
+        registerEmp.findById(empId,(error, data) =>{
             return((error)?(callback(error,null)): (callback(null,data)));
         });
     }
 
     updateInfo(empId, employeePayrollData, callback) {
-        registerUser.findByIdAndUpdate(empId,{
+        registerEmp.findByIdAndUpdate(empId,{
             firstName: employeePayrollData.firstName,
             lastName: employeePayrollData.lastName,
             emailId: employeePayrollData.emailId,
@@ -109,13 +106,10 @@ class empModel{
     }
 
     deleteById = (empId, callback) =>{
-        registerUser.findByIdAndRemove(empId,(error, data)=>{
+        registerEmp.findByIdAndRemove(empId,(error, data)=>{
             return((error)? (callback(error, null)):(callback(null, data)));
         })
     }
 }
-
-
-            
 
 module.exports = new empModel();

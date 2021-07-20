@@ -6,7 +6,7 @@
  * @since        14/06/2021  
 -----------------------------------------------------------------------------------------------*/
 
-const empService = require('../../services/service.js');
+const empService = require('../../services/employee.js');
 const { empValidation } = require('../middleware/empValidation.js');
 
 /**
@@ -28,7 +28,9 @@ class EmpPayrollController{
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 emailId: req.body.emailId,
-                password: req.body.password
+                department: req.body.department,
+                salary: req.body.salary,
+               
             }
             empService.createEmp(employeePayrollData, (error, data) => {
                 return ((error) ?
@@ -54,31 +56,6 @@ class EmpPayrollController{
      * @param {*} req 
      * @param {*} res 
      */
-    empLogin = (req,res) =>{
-        try{
-            const loginInput = {
-                emailId: req.body.emailId,
-                password: req.body.password
-            }
-            empService.login(loginInput,(error,data)=>{
-                return ((error) ? res.status(400).send({
-                    success: false,
-                    message: "Invalid credential"
-                }) :
-                res.send({
-                    success: true,
-                    message: "Login successful!",
-                    data: data
-                }));
-            });
-        }catch(error){
-            return res.status(500).send({
-                success: false,
-                message: error.message
-            });
-        }
-    }
-
     /**
      * @description This function will fetch the data of all the employees
      * @param {*} req 
@@ -195,5 +172,3 @@ class EmpPayrollController{
 module.exports = new EmpPayrollController();
 
 
-
-       

@@ -5,7 +5,7 @@
  * @author       Ritika <spk2ritika1911@gmail.com>
  * @since        14/06/2021  
 -----------------------------------------------------------------------------------------------*/
-const empPayrollModel = require('../app/models/model');
+const empModel = require('../app/models/employee');
 const helper = require('../app/middleware/helperFile');
 
 class empService{
@@ -16,7 +16,7 @@ class empService{
      */
     createEmp = (empData, callback) => {
         try{
-            empPayrollModel.create(empData, (error, data) => {
+            empModel.create(empData, (error, data) => {
                     return error? callback(error, null) : callback(null, data)    
             })
         }catch(error){
@@ -31,7 +31,7 @@ class empService{
      */
     login = (loginInput, callback) =>{
         try{
-            empPayrollModel.login(loginInput,(error, data) =>{
+            empModel.login(loginInput,(error, data) =>{
                 if(helper.checkByBcrypt(loginInput.password,data.password)){
                     const token = helper.generateToken({loginInput})
                     return (!token)? callback("Incorrect password! Please provide the correct password",null) : callback(null, token);  
@@ -51,7 +51,7 @@ class empService{
      */
     getAllEmpData = (callback) =>{
         try{
-            empPayrollModel.findAll((error, data)=>{
+            empModel.findAll((error, data)=>{
                 return ((error)? callback(error,null): callback(null,data));
             });
         }catch(error){
@@ -67,7 +67,7 @@ class empService{
      */
     getEmpDataById = (empId, callback) =>{
         try{
-            empPayrollModel.findOne(empId,(error,data)=>{
+            empModel.findOne(empId,(error,data)=>{
                 return((error)? callback(error,null) : callback(null,data));
             });
         }catch(error){
@@ -77,17 +77,17 @@ class empService{
 
     updateEmpData = (empId, empPayrollData, callback) =>{
         try{
-            empPayrollModel.updateInfo(empId, empPayrollData, (error, data) =>{
+            empModel.updateInfo(empId, empPayrollData, (error, data) =>{
                 return((error)?callback(error,null):callback(null, data));
             });
         }catch(error){
             return callback(error,null);
+        }
     }
-}
 
     deleteEmpData = (empId, callback) =>{
         try{
-            empPayrollModel.deleteById(empId,(error, data) =>{
+            empModel.deleteById(empId,(error, data) =>{
                 return((error)?callback(error, null):callback(null,data));
             });
         }catch(error){

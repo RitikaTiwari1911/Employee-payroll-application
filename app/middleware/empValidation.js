@@ -14,7 +14,6 @@ const empValidation = joi.object({
     department: joi.string().required(),
     salary: joi.string().required(),
     emailId: joi.string().email().required().pattern(new RegExp()),
-    password: joi.string().alphanum().min(8).max(30).required()
 });
 
 module.exports = {empValidation}; 

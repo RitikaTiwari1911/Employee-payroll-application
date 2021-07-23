@@ -57,26 +57,9 @@ class empModel{
             department: empData.department,
             salary: empData.salary,
             emailId: empData.emailId,
-            //password: empData.password
         });
         empPayrollData.save(callback)
     };
-
-    /**
-     * @description logging in employee 
-     * @param {*} loginInput 
-     * @param {*} callback 
-     */
-    login = (loginInput, callback) =>{
-        registerEmp.findOne({'emailId':loginInput.emailId},(error,data)=>{
-            if(error){
-                return callback(error,null);
-            }else if (!data){
-                return callback("Invalid credentails",null)
-            }
-            return callback(null, data);
-        })
-    }
 
     /**
      * @description Using find() which is a mongoose method

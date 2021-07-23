@@ -27,9 +27,9 @@ class EmpPayrollController{
             const employeePayrollData = {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                emailId: req.body.emailId,
                 department: req.body.department,
                 salary: req.body.salary,
+                emailId: req.body.emailId,
                
             }
             empService.createEmp(employeePayrollData, (error, data) => {
@@ -154,7 +154,7 @@ class EmpPayrollController{
 
 
     deleteEmp = (req,res) =>{
-        let empId = req.params;
+        let empId = req.params.empId;
         empService.deleteEmpData(empId,(error,data)=>{
             return((error)?res.status(400).send({
                 success:false,

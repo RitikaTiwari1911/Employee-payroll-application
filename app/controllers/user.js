@@ -37,7 +37,6 @@ class UserController{
 
     userLogin = (req,res) =>{
         try{
-            console.log("controller",req.body)
             const loginInput = {
                 emailId: req.body.emailId,
                 password: req.body.password

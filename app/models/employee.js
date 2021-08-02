@@ -78,14 +78,18 @@ class empModel{
     }
 
     updateInfo(empId, employeePayrollData, callback) {
-        registerEmp.findByIdAndUpdate(empId,{
+        try{
+            registerEmp.findByIdAndUpdate(empId,{
             firstName: employeePayrollData.firstName,
             lastName: employeePayrollData.lastName,
             emailId: employeePayrollData.emailId,
             password: employeePayrollData.password
         },(error, data)=>{
             return((error)?(callback(error,null)): callback(null,data));
-        });
+        })
+    }catch(error){
+            return callback(null)
+        }
     }
 
     deleteById = (empId, callback) =>{

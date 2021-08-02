@@ -17,7 +17,7 @@ module.exports = (app) => {
     app.post('/userLogin', user.userLogin);
     
     //registering a new employee
-    app.post('/registerEmp', employeePayroll.registerEmp);
+    app.post('/registerEmp', helperFile.checkToken, employeePayroll.registerEmp);
 
     //get all employees
     app.get('/readAllData', helperFile.checkToken,  employeePayroll.readAllData);

@@ -24,26 +24,6 @@ class empService{
         }
     }
 
-    /**
-     * @description this function let the employees login into their registered accounts
-     * @param {*} loginInput 
-     * @param {*} callback 
-     */
-    login = (loginInput, callback) =>{
-        try{
-            empModel.login(loginInput,(error, data) =>{
-                if(helper.checkByBcrypt(loginInput.password,data.password)){
-                    const token = helper.generateToken({loginInput})
-                    return (!token)? callback("Incorrect password! Please provide the correct password",null) : callback(null, token);  
-                }
-                else if (error){
-                    callback(error, null);
-                }
-            })
-        }catch(error){
-            return callback(error,null);
-        }
-    }
 
     /**
      * @description This function will fetch data from the database
